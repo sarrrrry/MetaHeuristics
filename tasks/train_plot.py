@@ -1,11 +1,11 @@
-
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 
 from src.problems.OneMax import OneMax
 from src.problems.function_Ackley import function_Ackley
@@ -31,6 +31,7 @@ from src.algorithms.GA_BLXa import GA_BLXa
 from src.algorithms.GA_SPX import GA_SPX
 from src.algorithms.Tabu import Tabu
 
+
 def create(D, N):
     funcs = [
         OneMax(D),
@@ -42,38 +43,47 @@ def create(D, N):
         function_StyblinskiTang(D),
         function_XinSheYang(D),
     ]
-    algs= [
+    algs = [
         GA(N, save_elite=False, select_method="ranking", mutation=0.05),
         PfGA(mutation=0.5),
         ABC(N, follow_bee=15, visit_max=30),
-        Bat(N, frequency_min=0, frequency_max=0.05, good_bat_rate=0.1, volume_init=0.5, pulse_convergence_value=0.9, pulse_convergence_speed=0.1),
+        Bat(
+            N,
+            frequency_min=0,
+            frequency_max=0.05,
+            good_bat_rate=0.1,
+            volume_init=0.5,
+            pulse_convergence_value=0.9,
+            pulse_convergence_speed=0.1,
+        ),
         Cuckoo(N, scaling_rate=1.0, levy_rate=1.0, bad_nest_rate=0.1),
         Cuckoo_greedy(N, epsilon=0.5, bad_nest_rate=0.1),
         DE(N, crossover_rate=0, scaling=0.4),
         Firefly(N, attracting_degree=0.08, absorb=50.0, alpha=0.02, is_normalization=True),
         Harmony(N, bandwidth=1.0, enable_bandwidth_rate=True, select_rate=0.4, change_rate=0.9),
         PSO(N, inertia=0.2, global_acceleration=0.2, personal_acceleration=0.2),
-        WOA(N, a_decrease=2/50, logarithmic_spiral=1),
+        WOA(N, a_decrease=2 / 50, logarithmic_spiral=1),
         GA_BLXa(N, save_elite=False, select_method="ranking", mutation=0.05, blx_a=0.1),
         GA_SPX(N, save_elite=False, select_method="ranking", mutation=0.05),
         Tabu(N, epsilon=0, tabu_list_size=10, tabu_range_rate=0.1),
     ]
     return funcs, algs
 
+
 def anime2(func, alg):
-    tmp_dir = os.path.join(os.path.dirname(__file__), '..', 'tmp')
+    tmp_dir = os.path.join(os.path.dirname(__file__), "..", "tmp")
 
     alg.init(func)
     N = 100
-    
+
     fig = plt.figure()
 
     func_x = []
     func_y = []
     diff_num = 1000
     for i in range(diff_num):
-        diff = (func.MAX_VAL-func.MIN_VAL)
-        x = func.MIN_VAL + (i/diff_num)*diff
+        diff = func.MAX_VAL - func.MIN_VAL
+        x = func.MIN_VAL + (i / diff_num) * diff
         y = func.eval(np.asarray([x]))
         func_x.append(x)
         func_y.append(y)
@@ -96,21 +106,19 @@ def anime2(func, alg):
         max_pos.append(alg.getMaxElement().getArray()[0])
         max_score.append(alg.getMaxElement().getScore())
 
-    
-    
     def plot(i):
         plt.cla()
 
         plt.plot(func_x, func_y, label=func.__class__.__name__, linewidth="0.5")
-        plt.plot(x_pos[i], y_score[i], 'o', color="orange", markeredgecolor="black")
-        plt.plot(max_pos[i], max_score[i], 'o', color="red", markeredgecolor="black")
-        plt.title('step={}'.format(i))
+        plt.plot(x_pos[i], y_score[i], "o", color="orange", markeredgecolor="black")
+        plt.plot(max_pos[i], max_score[i], "o", color="red", markeredgecolor="black")
+        plt.title("step={}".format(i))
 
     ani = animation.FuncAnimation(fig, plot, N, interval=200)
     path = os.path.join(tmp_dir, "{}_{}_2.gif".format(func.__class__.__name__, alg.__class__.__name__))
     print(path)
     ani.save(path, writer="imagemagick")
-    #plt.show()
+    # plt.show()
 
 
 def main2():
@@ -120,24 +128,23 @@ def main2():
             anime2(func, alg)
 
 
-
 def anime3(func, alg):
-    tmp_dir = os.path.join(os.path.dirname(__file__), '..', 'tmp')
+    tmp_dir = os.path.join(os.path.dirname(__file__), "..", "tmp")
 
     alg.init(func)
     N = 100
-    
+
     fig = plt.figure()
 
     # function
     func_y = []
     diff_num = 50
-    diff = (func.MAX_VAL-func.MIN_VAL)
+    diff = func.MAX_VAL - func.MIN_VAL
     for x1 in range(diff_num):
-        x1 = func.MIN_VAL + (x1/diff_num)*diff
+        x1 = func.MIN_VAL + (x1 / diff_num) * diff
         d = []
         for x2 in range(diff_num):
-            x2 = func.MIN_VAL + (x2/diff_num)*diff
+            x2 = func.MIN_VAL + (x2 / diff_num) * diff
             y = func.eval(np.asarray([x2, x1]))
             d.append(y)
         func_y.insert(0, d)
@@ -162,22 +169,23 @@ def anime3(func, alg):
         max_pos2.append(alg.getMaxElement().getArray()[1])
 
     extent = (func.MIN_VAL, func.MAX_VAL, func.MIN_VAL, func.MAX_VAL)
-    plt.imshow(func_y, interpolation="nearest",  cmap="jet", extent=extent)
+    plt.imshow(func_y, interpolation="nearest", cmap="jet", extent=extent)
     plt.colorbar()
+
     def plot(i):
         plt.cla()
 
-        plt.imshow(func_y, interpolation="nearest",  cmap="jet", extent=extent)
-        plt.plot(pos1[i], pos2[i], 'o', color="orange", markeredgecolor="black")
-        plt.plot(max_pos1[i], max_pos2[i], 'o', color="red", markeredgecolor="black")
-        plt.title('step={}'.format(i))
+        plt.imshow(func_y, interpolation="nearest", cmap="jet", extent=extent)
+        plt.plot(pos1[i], pos2[i], "o", color="orange", markeredgecolor="black")
+        plt.plot(max_pos1[i], max_pos2[i], "o", color="red", markeredgecolor="black")
+        plt.title("step={}".format(i))
 
     ani = animation.FuncAnimation(fig, plot, N, interval=200)
-    
+
     path = os.path.join(tmp_dir, "{}_{}_3.gif".format(func.__class__.__name__, alg.__class__.__name__))
     print(path)
     ani.save(path, writer="imagemagick")
-    #plt.show()
+    # plt.show()
 
 
 def main3():
@@ -187,9 +195,6 @@ def main3():
             anime3(func, alg)
 
 
-
 if __name__ == "__main__":
     main2()
     main3()
-
-

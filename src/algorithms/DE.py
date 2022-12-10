@@ -8,7 +8,8 @@ from ..algorithm_common import IAlgorithm
 
 
 class DE(IAlgorithm):
-    def __init__(self,
+    def __init__(
+        self,
         agent_max,
         crossover_rate=0.5,
         scaling=0.5,
@@ -31,13 +32,13 @@ class DE(IAlgorithm):
 
     def getElements(self):
         return self.agents
-    
+
     def step(self):
 
         for i, agent in enumerate(self.agents):
 
             # iを含まない3個体をランダムに選択
-            r1, r2, r3 = random.sample([ j for j in range(len(self.agents)) if j != i ], 3)
+            r1, r2, r3 = random.sample([j for j in range(len(self.agents)) if j != i], 3)
             pos1 = self.agents[r1].getArray()
             pos2 = self.agents[r2].getArray()
             pos3 = self.agents[r3].getArray()
@@ -49,7 +50,7 @@ class DE(IAlgorithm):
             pos = agent.getArray()
             ri = random.randint(0, len(pos))  # 1成分は必ず変異ベクトル
             for j in range(len(pos)):
-                if  ri == j or random.random() < self.crossover_rate:
+                if ri == j or random.random() < self.crossover_rate:
                     pos[j] = m_pos[j]
                 else:
                     pass  # 更新しない
@@ -59,4 +60,3 @@ class DE(IAlgorithm):
             self.count += 1
             if agent.getScore() < new_agent.getScore():
                 self.agents[i] = new_agent
-

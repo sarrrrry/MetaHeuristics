@@ -9,9 +9,8 @@ class function_Schwefel(Problem):
         super().__init__(self, size)
         self.MIN_VAL = -500
         self.MAX_VAL = 500
-        self.SCORE_MIN = -float('inf')
+        self.SCORE_MIN = -float("inf")
         self.SCORE_MAX = 0
-
 
     def init(self):
         pass
@@ -22,4 +21,3 @@ class function_Schwefel(Problem):
 
     def view(self, np_arr):
         print("score: {}".format(self.eval(np_arr)))
-

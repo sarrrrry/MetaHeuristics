@@ -1,20 +1,20 @@
-
 import numpy as np
 
 from ..problem import Problem
 
+
 class EightQueen(Problem):
     def __init__(self, size):
-        super().__init__(self, size*2)
+        super().__init__(self, size * 2)
         self.field_size = size
         self.MIN_VAL = 0
-        self.MAX_VAL = size-1
+        self.MAX_VAL = size - 1
         self.SCORE_MIN = 0
         self.SCORE_MAX = size
-    
+
     def init(self):
         pass
-    
+
     def eval(self, np_arr):
 
         # arrを駒の座標に変換
@@ -24,7 +24,7 @@ class EightQueen(Problem):
         for i in range(len(koma_list)):
             f = True
             for j in range(len(koma_list)):
-                if i==j:
+                if i == j:
                     continue
                 # x
                 if koma_list[i][0] == koma_list[j][0]:
@@ -50,10 +50,9 @@ class EightQueen(Problem):
 
         koma_list = []
         for i in range(0, len(np_arr), 2):
-            koma_list.append((np_arr[i], np_arr[i+1]))
+            koma_list.append((np_arr[i], np_arr[i + 1]))
         return koma_list
 
-    
     def view(self, np_arr):
         print("score: {}".format(self.eval(np_arr)))
 
@@ -74,5 +73,3 @@ class EightQueen(Problem):
                 else:
                     print("0", end="")
             print("")
-
-

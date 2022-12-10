@@ -23,5 +23,3 @@ class OneMax(Problem):
         np_arr = np.round(np_arr)  # 2値化
         tmp = ["{:.2f}".format(x) for x in np_arr]
         print(" ".join(tmp))
-
-

@@ -1,6 +1,4 @@
-import glob
 import json
-import os
 import random
 import time
 
@@ -90,7 +88,7 @@ def main():
                 "alg": alg_cls.__name__,
                 "best_params": study.best_params,
                 "best_value": study.best_value,
-                "data": data
+                "data": data,
             }
 
             # output
@@ -128,16 +126,18 @@ def view():
 
         if d["alg"] not in algs:
             algs[d["alg"]] = []
-        algs[d["alg"]].append({
-            "prob": d["prob"],
-            "params": d["best_params"],
-        })
+        algs[d["alg"]].append(
+            {
+                "prob": d["prob"],
+                "params": d["best_params"],
+            }
+        )
 
     # グラフ化
     for name, prob in probs.items():
         df = pd.DataFrame(prob)
 
-        plt.style.use('ggplot')
+        plt.style.use("ggplot")
         df.plot.bar(x="alg", y=["min", "mean", "max"], title="{}".format(name), xlabel="")
 
         path = out_dir / f"{name}.png"

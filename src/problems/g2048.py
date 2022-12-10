@@ -12,7 +12,7 @@ class g2048(Problem):
         self.MIN_VAL = 0
         self.MAX_VAL = 3
         self.SCORE_MIN = 0
-        self.SCORE_MAX = float('inf')
+        self.SCORE_MAX = float("inf")
 
         self.max_turn = max_turn
 
@@ -26,13 +26,12 @@ class g2048(Problem):
         self.create_pos = []
         for _ in range(self.max_turn):
             self.create_pos.append((random.randint(0, 3), random.randint(0, 3)))
-        
 
     def eval(self, np_arr, is_view=False):
         np_arr = np.round(np_arr)  # 2値
 
         # 初期フィールドをコピー
-        fields = [ x[:] for x in self.fields]
+        fields = [x[:] for x in self.fields]
 
         if is_view:
             self._viewMap(fields)
@@ -44,12 +43,12 @@ class g2048(Problem):
             for y in range(4):
                 for x in range(4):
                     self._move(fields, np_arr[i], x, y)
-            
+
             # 新しく設置、すでにあれば次のセルを見る
             pos = self.create_pos[i]
             x = pos[0]
             y = pos[1]
-            for _ in range(4*4):
+            for _ in range(4 * 4):
                 if fields[y][x] == 0:
                     fields[y][x] = 2
                     break
@@ -71,32 +70,32 @@ class g2048(Problem):
             for x in range(4):
                 if score < fields[y][x]:
                     score = fields[y][x]
-        
+
         return score
 
     def _move(self, fields, cmd, x, y):
         if fields[y][x] == 0:
             return
-        
+
         if cmd == 0:  # up
             if y == 0:
                 return
             tx = x
-            ty = y-1
+            ty = y - 1
         elif cmd == 1:  # right
             if x == 3:
                 return
-            tx = x+1
+            tx = x + 1
             ty = y
         elif cmd == 2:  # down
             if y == 3:
                 return
             tx = x
-            ty = y+1
+            ty = y + 1
         elif cmd == 3:  # left
             if x == 0:
                 return
-            tx = x-1
+            tx = x - 1
             ty = y
         else:
             raise ValueError()
@@ -110,7 +109,6 @@ class g2048(Problem):
             # 同じ数字なので合成
             fields[ty][tx] += fields[y][x]
             fields[y][x] = 0
-        
 
     def view(self, np_arr):
         print("score: {}".format(self.eval(np_arr, is_view=True)))
@@ -121,5 +119,3 @@ class g2048(Problem):
             for x in range(4):
                 s += "{:5} ".format(fields[y][x])
             print(s)
-
-

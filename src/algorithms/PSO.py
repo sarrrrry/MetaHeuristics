@@ -8,7 +8,8 @@ from ..algorithm_common import IAlgorithm
 
 
 class PSO(IAlgorithm):
-    def __init__(self,
+    def __init__(
+        self,
         particle_max,
         inertia=0.9,
         global_acceleration=0.9,
@@ -18,7 +19,6 @@ class PSO(IAlgorithm):
         self.inertia = inertia
         self.global_acceleration = global_acceleration
         self.personal_acceleration = personal_acceleration
-
 
     def init(self, problem):
         self.problem = problem
@@ -39,7 +39,7 @@ class PSO(IAlgorithm):
             }
             self.particles.append(d)
             self._updateBest(d)
-    
+
     def getMaxElement(self):
         return self.global_best
 
@@ -56,8 +56,8 @@ class PSO(IAlgorithm):
             # 加速度を計算
             v = particle["v"]
             v = self.inertia * v
-            v += self.global_acceleration * (g_pos-pos) * random.random()
-            v += self.personal_acceleration * (p_pos-pos) * random.random()
+            v += self.global_acceleration * (g_pos - pos) * random.random()
+            v += self.personal_acceleration * (p_pos - pos) * random.random()
             particle["v"] = v
 
             # 座標を更新
@@ -65,7 +65,6 @@ class PSO(IAlgorithm):
             self.count += 1
 
             self._updateBest(particle)
-
 
     def _updateBest(self, particle):
 
@@ -76,5 +75,3 @@ class PSO(IAlgorithm):
         # グローバルベストの更新
         if self.global_best is None or self.global_best.getScore() < particle["particle"].getScore():
             self.global_best = particle["particle"].copy()
-
-

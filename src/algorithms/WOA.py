@@ -8,8 +8,10 @@ from ..algorithm_common import IAlgorithm
 
 # https://github.com/docwza/woa/blob/master/src/whale_optimization.py
 
+
 class WOA(IAlgorithm):
-    def __init__(self,
+    def __init__(
+        self,
         whale_max,
         a_decrease=0.001,
         logarithmic_spiral=1,
@@ -32,13 +34,12 @@ class WOA(IAlgorithm):
                 self.best_whale = o.copy()
         self._a = 2
 
-
     def getMaxElement(self):
         return self.best_whale
 
     def getElements(self):
         return self.whales
-    
+
     def step(self):
         for whale in self.whales:
             pos = whale.getArray()
@@ -54,7 +55,7 @@ class WOA(IAlgorithm):
                     new_pos = self.best_whale.getArray()
                 else:
                     # 獲物を探す
-                    new_pos = self.whales[random.randint(0, len(self.whales)-1)].getArray()
+                    new_pos = self.whales[random.randint(0, len(self.whales) - 1)].getArray()
 
                 D = np.linalg.norm(np.multiply(C, new_pos) - pos)
                 pos = new_pos - np.multiply(A, D)
@@ -65,7 +66,7 @@ class WOA(IAlgorithm):
                 D = np.linalg.norm(best_pos - pos)
                 L = np.random.uniform(-1, 1, self.problem.size)  # [-1,1]の乱数
                 _b = self.logarithmic_spiral
-                pos = np.multiply(np.multiply(D, np.exp(_b*L)), np.cos(2.0*np.pi*L)) + best_pos
+                pos = np.multiply(np.multiply(D, np.exp(_b * L)), np.cos(2.0 * np.pi * L)) + best_pos
 
             whale.setArray(pos)
             self.count += 1
@@ -78,4 +79,3 @@ class WOA(IAlgorithm):
 
     def spiral(self, x, L):
         return x * np.exp(self.logarithmic_spiral * L) * np.cos(2.0 * np.pi * L)
-

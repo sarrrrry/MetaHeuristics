@@ -6,15 +6,10 @@ from ..algorithm_common import IAlgorithm
 
 
 class ABC(IAlgorithm):
-    def __init__(self, 
-        harvest_bee,
-        follow_bee=10,
-        visit_max=10
-    ):
+    def __init__(self, harvest_bee, follow_bee=10, visit_max=10):
         self.harvest_bee = harvest_bee
         self.follow_bee = follow_bee
         self.visit_max = visit_max
-
 
     def init(self, problem):
         self.problem = problem
@@ -24,10 +19,7 @@ class ABC(IAlgorithm):
         self.flowers = []
         for _ in range(self.harvest_bee):
             o = problem.create()
-            self.flowers.append({
-                "flower": o,
-                "count": 0
-            })
+            self.flowers.append({"flower": o, "count": 0})
 
             if self.max_flower is None or self.max_flower.getScore() < o.getScore():
                 self.max_flower = o
@@ -46,10 +38,10 @@ class ABC(IAlgorithm):
 
             # 食糧源の近くを探索
             pos = flower.getArray()
-            k = random.randint(0, len(pos)-1)  # 1つの成分をランダムに決める
-            flower2 = self.flowers[random.randint(0, len(self.flowers)-1)]["flower"]
+            k = random.randint(0, len(pos) - 1)  # 1つの成分をランダムに決める
+            flower2 = self.flowers[random.randint(0, len(self.flowers) - 1)]["flower"]
             pos2 = flower2.getArray()  # 別食糧源
-            pos[k] += (random.random()*2-1) * (pos[k] - pos2[k])
+            pos[k] += (random.random() * 2 - 1) * (pos[k] - pos2[k])
 
             # 新しい座標の食糧源を作成
             new_flower = self.problem.create(pos)
@@ -84,4 +76,3 @@ class ABC(IAlgorithm):
                 # 最大の食糧源なら保存
                 if self.max_flower.getScore() < o.getScore():
                     self.max_flower = o
-                

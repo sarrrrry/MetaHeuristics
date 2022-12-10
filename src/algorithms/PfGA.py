@@ -33,8 +33,8 @@ class PfGA(IAlgorithm):
             self.individuals.append(self.problem.create())
 
         # ランダムに2個取り出す
-        p1 = self.individuals.pop(random.randint(0, len(self.individuals)-1))
-        p2 = self.individuals.pop(random.randint(0, len(self.individuals)-1))
+        p1 = self.individuals.pop(random.randint(0, len(self.individuals) - 1))
+        p2 = self.individuals.pop(random.randint(0, len(self.individuals) - 1))
 
         # 子を作成
         c1, c2 = self._cross(p1, p2)
@@ -78,7 +78,7 @@ class PfGA(IAlgorithm):
     def _cross(self, o1, o2):
         arr1 = o1.getArray()
         arr2 = o2.getArray()
-        
+
         # 一様交叉
         new_arr1 = []
         new_arr2 = []
@@ -96,7 +96,7 @@ class PfGA(IAlgorithm):
             if r < self.mutation:
                 val1 = self.problem.randomVal()
                 val2 = self.problem.randomVal()
-                
+
             new_arr1.append(val1)
             new_arr2.append(val2)
 
@@ -104,4 +104,3 @@ class PfGA(IAlgorithm):
         new_o2 = self.problem.create(new_arr2)
         self.count += 2
         return new_o1, new_o2
-

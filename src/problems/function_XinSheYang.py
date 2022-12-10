@@ -7,11 +7,10 @@ from ..algorithm_common import AlgorithmCommon as AC
 class function_XinSheYang(Problem):
     def __init__(self, size):
         super().__init__(self, size)
-        self.MIN_VAL = -2*math.pi
+        self.MIN_VAL = -2 * math.pi
         self.MAX_VAL = math.pi
-        self.SCORE_MIN = -float('inf')
+        self.SCORE_MIN = -float("inf")
         self.SCORE_MAX = 0
-
 
     def init(self):
         pass
@@ -24,6 +23,3 @@ class function_XinSheYang(Problem):
 
     def view(self, np_arr):
         print("score: {}".format(self.eval(np_arr)))
-
-
-

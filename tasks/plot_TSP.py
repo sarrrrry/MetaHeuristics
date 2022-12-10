@@ -1,7 +1,7 @@
-
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 
 from src.problems.TSP import TSP
 from src.algorithms.PfGA import PfGA
@@ -20,8 +20,9 @@ def main():
         if max_score < a.getMaxScore():
             max_score = a.getMaxScore()
             print("{} {}".format(i, max_score))
-    
+
     a.getMaxElement().view()
+
 
 if __name__ == "__main__":
     main()

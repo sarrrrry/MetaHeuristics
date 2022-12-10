@@ -8,13 +8,7 @@ from ..algorithm_common import IAlgorithm
 
 
 class Firefly(IAlgorithm):
-    def __init__(self,
-        firefly_max,
-        attracting_degree=1.0,
-        absorb=10.0,
-        alpha=1.0,
-        is_normalization=True
-    ):
+    def __init__(self, firefly_max, attracting_degree=1.0, absorb=10.0, alpha=1.0, is_normalization=True):
         self.firefly_max = firefly_max
         self.attracting_degree = attracting_degree
         self.absorb = absorb
@@ -39,8 +33,7 @@ class Firefly(IAlgorithm):
 
     def getElements(self):
         return self.fireflys
-        
-        
+
     def step(self):
         for i in range(len(self.fireflys)):
             for j in range(len(self.fireflys)):
@@ -58,7 +51,7 @@ class Firefly(IAlgorithm):
                         d /= self.max_norm
                     attract = self.light_intensity(d)
 
-                    r = np.asarray([ self._r() for _ in range(self.problem.size)])
+                    r = np.asarray([self._r() for _ in range(self.problem.size)])
                     pos = pos + attract * (pos2 - pos) + self.alpha * r
 
                     # 更新
@@ -74,4 +67,3 @@ class Firefly(IAlgorithm):
         if r == 0:
             r = -1
         return self.problem.randomVal() * r
-

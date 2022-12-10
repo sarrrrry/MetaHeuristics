@@ -6,20 +6,20 @@ from ..algorithm_common import IAlgorithm
 
 
 class GA_BLXa(IAlgorithm):
-    def __init__(self, 
-            individual_max,
-            save_elite=True,
-            select_method="ranking",
-            mutation=0.1,
-            blx_a=0.3,
-        ):
+    def __init__(
+        self,
+        individual_max,
+        save_elite=True,
+        select_method="ranking",
+        mutation=0.1,
+        blx_a=0.3,
+    ):
         self.individual_max = individual_max
 
         self.save_elite = save_elite
         self.select_method = select_method
         self.mutation = mutation
         self.blx_a = blx_a
-
 
     def init(self, problem):
         self.problem = problem
@@ -52,7 +52,7 @@ class GA_BLXa(IAlgorithm):
         if self.save_elite:
             # エリートを生存させる
             next_individuals.append(self.individuals[-1].copy())
-        
+
         for _ in range(self.individual_max):
             # 個数が集まるまで繰り返す
             if len(next_individuals) > self.individual_max:
@@ -66,7 +66,7 @@ class GA_BLXa(IAlgorithm):
             new_o1, new_o2 = self._cross(o1, o2)
             next_individuals.append(new_o1)
             next_individuals.append(new_o2)
-        
+
         self.individuals = next_individuals
 
         self.sort()
@@ -122,5 +122,3 @@ class GA_BLXa(IAlgorithm):
         childe2 = self.problem.create(c_genes2)
         self.count += 2
         return childe1, childe2
-
-

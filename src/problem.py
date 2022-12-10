@@ -2,7 +2,8 @@ import random
 
 import numpy as np
 
-class Problem():
+
+class Problem:
     def __init__(self, domain, size):
         self.domain = domain
         self.size = size
@@ -27,9 +28,9 @@ class Problem():
 
     def view(self, score, np_arr):
         raise NotImplementedError()
-    
 
-class ProblemData():
+
+class ProblemData:
     def __init__(self, domain, size):
         self.domain = domain
         self.size = size
@@ -44,7 +45,7 @@ class ProblemData():
 
     def getArray(self):
         return self.np_arr.copy()
-        
+
     def setArray(self, np_arr):
         # 下限と上限でまるめる
         np_arr = np.where(np_arr < self.domain.MIN_VAL, self.domain.MIN_VAL, np_arr)
@@ -60,6 +61,3 @@ class ProblemData():
 
     def view(self):
         self.domain.view(self.np_arr)
-
-
-

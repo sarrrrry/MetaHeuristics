@@ -5,15 +5,14 @@ from ..problem import Problem
 
 class LifeGame(Problem):
     def __init__(self, size, max_turn):
-        super().__init__(self, size*size)
+        super().__init__(self, size * size)
         self.field_size = size
         self.MIN_VAL = 0
         self.MAX_VAL = 1
         self.SCORE_MIN = 0
-        self.SCORE_MAX = size*size
+        self.SCORE_MAX = size * size
 
         self.max_turn = max_turn
-
 
     def init(self):
         pass
@@ -33,14 +32,14 @@ class LifeGame(Problem):
         for y in range(self.field_size):
             for x in range(self.field_size):
                 n = 0
-                n += self._get(cells, x-1, y-1)
-                n += self._get(cells, x  , y-1)
-                n += self._get(cells, x+1, y-1)
-                n += self._get(cells, x+1, y)
-                n += self._get(cells, x-1, y)
-                n += self._get(cells, x-1, y+1)
-                n += self._get(cells, x  , y+1)
-                n += self._get(cells, x+1, y+1)
+                n += self._get(cells, x - 1, y - 1)
+                n += self._get(cells, x, y - 1)
+                n += self._get(cells, x + 1, y - 1)
+                n += self._get(cells, x + 1, y)
+                n += self._get(cells, x - 1, y)
+                n += self._get(cells, x - 1, y + 1)
+                n += self._get(cells, x, y + 1)
+                n += self._get(cells, x + 1, y + 1)
                 if self._get(cells, x, y) == 0:
                     if n == 3:
                         next_cells[y][x] = 1
@@ -49,9 +48,8 @@ class LifeGame(Problem):
                         next_cells[y][x] = 1
                     else:
                         next_cells[y][x] = 0
-        
-        return next_cells
 
+        return next_cells
 
     def _get(self, cells, x, y):
         if x < 0:
@@ -63,7 +61,6 @@ class LifeGame(Problem):
         if y >= self.field_size:
             return 0
         return cells[y][x]
-
 
     def view(self, np_arr):
         print("score: {}".format(self.eval(np_arr)))
@@ -82,7 +79,7 @@ class LifeGame(Problem):
 
         for _ in range(self.max_turn):
             cells = self._step(cells)
-        
+
         print("")
         for y in range(self.field_size):
             s = ""
@@ -93,9 +90,9 @@ class LifeGame(Problem):
                     s += "□"
             print(s)
 
+
 if __name__ == "__main__":
     o = LifeGame(10, 50)
     o.init()
     o2 = o.create()
     o2.view()
-

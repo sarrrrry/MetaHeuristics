@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "metaheuristics"
+version = "0.1.0"
+description = ""
+authors = ["sarrrrryy <sarrrrry.sarrrrry@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10,<3.11"
+numpy = "^1.23.5"
+matplotlib = "^3.6.2"
+joblib = "^1.2.0"
+pandas = "^1.5.2"
+optuna = "^3.0.4"
+loguru = "^0.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
